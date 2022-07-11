@@ -7,8 +7,13 @@ module.exports = {
 	entry: './src/index.tsx',
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "[name].[hash].js"
+		filename: "[name].[hash].js",
+		publicPath: '/',
 	},
+	plugins: [
+		new HTMLWebpackPlugin({template: "./public/index.html"}),
+		new CleanWebpackPlugin()
+	],
 	module: {
 		rules: [
 			{
@@ -17,8 +22,45 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(css|sass|scss)$/,
-				use: ['style-loader', 'css-loader', 'sass-loader'],
+				test: /\.scss$/i,
+				exclude: /\.module\.scss$/i,
+				use: [
+					{
+						loader: "style-loader",
+					},
+					{
+						loader: "css-loader",
+						options: {
+							importLoaders: 1,
+							modules: {
+								mode: "icss",
+							},
+						},
+					},
+					{
+						loader: "sass-loader",
+					},
+				],
+			},
+			{
+				test: /\.module\.scss$/i,
+				use: [
+					{
+						loader: "style-loader",
+					},
+					{
+						loader: "css-loader",
+						options: {
+							importLoaders: 1,
+							modules: {
+								mode: "local",
+							},
+						},
+					},
+					{
+						loader: "sass-loader",
+					},
+				],
 			},
 			{
 				test: /\.(jpg|jpeg|png|svg)$/,
@@ -26,15 +68,14 @@ module.exports = {
 			},
 		],
 	},
+	
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
 	},
 	devServer: {
 		port: 3000,
+		historyApiFallback: true,
 	},
-	plugins: [
-		new HTMLWebpackPlugin({template: "./public/index.html"}),
-		new CleanWebpackPlugin()
-	],
+	
 	devtool: 'eval-source-map',
 }
