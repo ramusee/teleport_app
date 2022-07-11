@@ -1,8 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IMainSlice} from "../../models/interfaces";
 
-interface IMainSlice{
-	search: string;
-}
 
 const initialState: IMainSlice = {
 	search: '',

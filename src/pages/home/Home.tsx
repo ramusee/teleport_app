@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 const Home = () => {
 	return (
 		<div className={s.page}>
-			<Link to="/location/123">link</Link>
+			<Link to="/location/123">location</Link>
 		</div>
 	);
 };
