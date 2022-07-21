@@ -1,17 +1,33 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IMainSlice} from "../../models/interfaces";
+import {ICity, IMainSlice} from "../../models/interfaces";
 
 
 const initialState: IMainSlice = {
 	search: '',
-}
+	searchCities: [],
+	isLoading: false,
+	error: ''
+};
+
 export const mainSlice = createSlice({
 	name: 'main',
 	initialState,
 	reducers: {
-		setSearch(state, action: PayloadAction<string>) {
-			state.search = action.payload
+		fetching(state) {
+			state.isLoading = true;
 		},
-	}
-})
-export default mainSlice.reducer
+		fetchingSuccess(state, action: PayloadAction<ICity[]>) {
+			state.isLoading = false;
+			state.error = '';
+			state.searchCities = action.payload;
+		},
+		fetchingError(state, action: PayloadAction<string>) {
+			state.isLoading = false;
+			state.error = action.payload;
+		},
+		setSearch(state, action: PayloadAction<string>) {
+			state.search = action.payload;
+		},
+	},
+});
+export default mainSlice.reducer;

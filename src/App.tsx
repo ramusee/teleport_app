@@ -2,8 +2,8 @@ import React, {FC} from 'react';
 import './index.scss'
 import {Route, Routes} from "react-router-dom";
 import {Home} from "./pages/home/Home";
-import {Location} from "./pages/location/Location";
 import {Header} from "./components/header/Header";
+import {City} from "./pages/city/City";
 
 const App: FC = () => {
 	return (
@@ -12,7 +12,7 @@ const App: FC = () => {
 			<main>
 				<Routes>
 					<Route path="/" element={<Home/>}/>
-					<Route path="/location/:id" element={<Location/>}/>
+					<Route path="/city/:id" element={<City/>}/>
 				</Routes>
 			</main>
 		
